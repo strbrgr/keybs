@@ -68,7 +68,7 @@ static uint16_t auto_pointer_layer_timer = 0;
 /** Convenience row shorthands. */
 #define _______________DEAD_HALF_ROW_______________ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
 #define ______________HOME_ROW_GACS_L______________ KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX
-#define ______________HOME_ROW_GACS_R______________ XXXXXXX, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI
+#define ______________HOME_ROW_GACS_R______________ XXXXXXX, KC_RSFT, KC_RCTL, KC_RALT, KC_RGUI
 
 /*
  * Layers used on the Dilemma.
@@ -158,7 +158,7 @@ static uint16_t auto_pointer_layer_timer = 0;
              L00,         L01,         L02,         L03,         L04,  \
              R05,         R06,         R07,         R08,         R09,  \
       LGUI_T(L10), LALT_T(L11), LCTL_T(L12), LSFT_T(L13),        L14,  \
-             R15,  RSFT_T(R16), RCTL_T(R17), LALT_T(R18), RGUI_T(R19), \
+             R15,  RSFT_T(R16), RCTL_T(R17), RALT_T(R18), RGUI_T(R19), \
       __VA_ARGS__
 #define HOME_ROW_MOD_GACS(...) _HOME_ROW_MOD_GACS(__VA_ARGS__)
 
@@ -228,73 +228,15 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 #    endif // DILEMMA_AUTO_SNIPING_ON_LAYER
 #endif     // POINTING_DEVICE_ENABLE
 
-enum combo_events {
-  SCREENSHOT,
-  CAPSWORD,
-  LBRACKET,
-  RBRACKET,
-  LPRN,
-  RPRN,
-  TAB,
-  COMBO_LENGTH
-};
-uint16_t COMBO_LEN = COMBO_LENGTH; // remove the COMBO_COUNT define and use this instead!
-
-const uint16_t PROGMEM screenshot_combo[] = {KC_W, KC_F, COMBO_END};
-const uint16_t PROGMEM capsword_combo[] = {KC_C, KC_D, COMBO_END};
-const uint16_t PROGMEM lbracket_combo[] = {KC_R, KC_S, COMBO_END};
-const uint16_t PROGMEM rbracket_combo[] = {KC_E, KC_I, COMBO_END};
-const uint16_t PROGMEM lprn_combo[] = {KC_S, KC_T, COMBO_END};
-const uint16_t PROGMEM rprn_combo[] = {KC_N, KC_E, COMBO_END};
-const uint16_t PROGMEM tab_combo[] = {KC_R, KC_T, COMBO_END};
-
-
+const uint16_t PROGMEM TAB[] = {LALT_T(KC_R), LSFT_T(KC_T), COMBO_END};
+const uint16_t PROGMEM LBRACKET[] = {LALT_T(KC_R), LCTL_T(KC_S), COMBO_END};
+const uint16_t PROGMEM RBRACKET[] = {RCTL_T(KC_E), RALT_T(KC_I), COMBO_END};
+const uint16_t PROGMEM LPRN[] = {LCTL_T(KC_S), LSFT_T(KC_T), COMBO_END};
+const uint16_t PROGMEM RPRN[] = {RSFT_T(KC_N), RCTL_T(KC_E), COMBO_END};
 combo_t key_combos[] = {
-  [SCREENSHOT] = COMBO_ACTION(screenshot_combo),
-  [CAPSWORD] = COMBO_ACTION(capsword_combo),
-  [LBRACKET] = COMBO_ACTION(lbracket_combo),
-  [RBRACKET] = COMBO_ACTION(rbracket_combo),
-  [LPRN] = COMBO_ACTION(lprn_combo),
-  [RPRN] = COMBO_ACTION(rprn_combo),
-  [TAB] = COMBO_ACTION(tab_combo),
+    COMBO(TAB, KC_TAB),
+    COMBO(LBRACKET, KC_LBRC),
+    COMBO(RBRACKET, KC_RBRC),
+    COMBO(LPRN, KC_LPRN),
+    COMBO(RPRN, KC_RPRN),
 };
-
-void process_combo_event(uint16_t combo_index, bool pressed) {
-  switch(combo_index) {
-    case SCREENSHOT:
-      if (pressed) {
-        tap_code16(LSG(KC_4));
-      }
-      break;
-    case CAPSWORD:
-      if (pressed) {
-        caps_word_on();
-      }
-      break;
-    case LBRACKET:
-      if (pressed) {
-        tap_code16(KC_LBRC);
-      }
-      break;
-    case RBRACKET:
-      if (pressed) {
-        tap_code16(KC_RBRC);
-      }
-      break;
-    case LPRN:
-      if (pressed) {
-        tap_code16(KC_LPRN);
-      }
-      break;
-    case RPRN:
-      if (pressed) {
-        tap_code16(KC_RPRN);
-      }
-      break;
-    case TAB:
-      if (pressed) {
-        tap_code16(KC_TAB);
-      }
-      break;
-  }
-}
