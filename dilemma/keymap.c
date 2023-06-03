@@ -17,16 +17,16 @@
 #include QMK_KEYBOARD_H
 
 #ifdef DILEMMA_AUTO_POINTER_LAYER_TRIGGER_ENABLE
-#    include "timer.h"
+#include "timer.h"
 #endif // DILEMMA_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 
 enum dilemma_keymap_layers {
-    LAYER_BASE = 0,
-    LAYER_FUNCTION,
-    LAYER_NAVIGATION,
-    LAYER_POINTER,
-    LAYER_NUMERAL,
-    LAYER_SYMBOLS,
+  LAYER_BASE = 0,
+  LAYER_FUNCTION,
+  LAYER_NAVIGATION,
+  LAYER_POINTER,
+  LAYER_NUMERAL,
+  LAYER_SYMBOLS,
 };
 
 // Automatically enable sniping-mode on the pointer layer.
@@ -35,14 +35,14 @@ enum dilemma_keymap_layers {
 #ifdef DILEMMA_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 static uint16_t auto_pointer_layer_timer = 0;
 
-#    ifndef DILEMMA_AUTO_POINTER_LAYER_TRIGGER_TIMEOUT_MS
-#        define DILEMMA_AUTO_POINTER_LAYER_TRIGGER_TIMEOUT_MS 1000
-#    endif // DILEMMA_AUTO_POINTER_LAYER_TRIGGER_TIMEOUT_MS
+#ifndef DILEMMA_AUTO_POINTER_LAYER_TRIGGER_TIMEOUT_MS
+#define DILEMMA_AUTO_POINTER_LAYER_TRIGGER_TIMEOUT_MS 1000
+#endif // DILEMMA_AUTO_POINTER_LAYER_TRIGGER_TIMEOUT_MS
 
-#    ifndef DILEMMA_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD
-#        define DILEMMA_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD 8
-#    endif // DILEMMA_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD
-#endif     // DILEMMA_AUTO_POINTER_LAYER_TRIGGER_ENABLE
+#ifndef DILEMMA_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD
+#define DILEMMA_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD 8
+#endif // DILEMMA_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD
+#endif // DILEMMA_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 
 #define SPC_NAV LT(LAYER_NAVIGATION, KC_SPC)
 #define TAB_FUN LT(LAYER_FUNCTION, KC_TAB)
@@ -51,17 +51,17 @@ static uint16_t auto_pointer_layer_timer = 0;
 #define _L_PTR(KC) LT(LAYER_POINTER, KC)
 
 #ifndef POINTING_DEVICE_ENABLE
-#    define DRGSCRL KC_NO
-#    define DPI_MOD KC_NO
-#    define S_D_MOD KC_NO
-#    define SNIPING KC_NO
+#define DRGSCRL KC_NO
+#define DPI_MOD KC_NO
+#define S_D_MOD KC_NO
+#define SNIPING KC_NO
 #endif // !POINTING_DEVICE_ENABLE
 
 // clang-format off
 /** \brief QWERTY layout (3 rows, 10 columns). */
 #define LAYOUT_LAYER_BASE                                                                     \
        KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, \
-       KC_A,    KC_R,    KC_S,    KC_T,    ALL_T(KC_G),    ALL_T(KC_M),    KC_N,    KC_E,    KC_I, KC_O, \
+       KC_A,    KC_R,    KC_S,    KC_T, ALL_T(KC_G), ALL_T(KC_M),    KC_N,    KC_E,    KC_I, KC_O, \
        KC_Z,    KC_X,    KC_C,    D_NUM,    KC_V,    KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, \
                                ESC_SYM, SPC_NAV, KC_ENT, KC_BSPC
 
@@ -201,42 +201,43 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // clang-format on
 
 #ifdef POINTING_DEVICE_ENABLE
-#    ifdef DILEMMA_AUTO_POINTER_LAYER_TRIGGER_ENABLE
+#ifdef DILEMMA_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
-    if (abs(mouse_report.x) > DILEMMA_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD || abs(mouse_report.y) > DILEMMA_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD) {
-        if (auto_pointer_layer_timer == 0) {
-            layer_on(LAYER_POINTER);
-        }
-        auto_pointer_layer_timer = timer_read();
+  if (abs(mouse_report.x) > DILEMMA_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD ||
+      abs(mouse_report.y) > DILEMMA_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD) {
+    if (auto_pointer_layer_timer == 0) {
+      layer_on(LAYER_POINTER);
     }
-    return mouse_report;
+    auto_pointer_layer_timer = timer_read();
+  }
+  return mouse_report;
 }
 
 void matrix_scan_user(void) {
-    if (auto_pointer_layer_timer != 0 && TIMER_DIFF_16(timer_read(), auto_pointer_layer_timer) >= DILEMMA_AUTO_POINTER_LAYER_TRIGGER_TIMEOUT_MS) {
-        auto_pointer_layer_timer = 0;
-        layer_off(LAYER_POINTER);
-    }
+  if (auto_pointer_layer_timer != 0 &&
+      TIMER_DIFF_16(timer_read(), auto_pointer_layer_timer) >=
+          DILEMMA_AUTO_POINTER_LAYER_TRIGGER_TIMEOUT_MS) {
+    auto_pointer_layer_timer = 0;
+    layer_off(LAYER_POINTER);
+  }
 }
-#    endif // DILEMMA_AUTO_POINTER_LAYER_TRIGGER_ENABLE
+#endif // DILEMMA_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 
-#    ifdef DILEMMA_AUTO_SNIPING_ON_LAYER
+#ifdef DILEMMA_AUTO_SNIPING_ON_LAYER
 layer_state_t layer_state_set_user(layer_state_t state) {
-    dilemma_set_pointer_sniping_enabled(layer_state_cmp(state, DILEMMA_AUTO_SNIPING_ON_LAYER));
-    return state;
+  dilemma_set_pointer_sniping_enabled(
+      layer_state_cmp(state, DILEMMA_AUTO_SNIPING_ON_LAYER));
+  return state;
 }
-#    endif // DILEMMA_AUTO_SNIPING_ON_LAYER
-#endif     // POINTING_DEVICE_ENABLE
+#endif // DILEMMA_AUTO_SNIPING_ON_LAYER
+#endif // POINTING_DEVICE_ENABLE
 
 const uint16_t PROGMEM TAB[] = {LALT_T(KC_R), LSFT_T(KC_T), COMBO_END};
 const uint16_t PROGMEM LBRACKET[] = {LALT_T(KC_R), LCTL_T(KC_S), COMBO_END};
 const uint16_t PROGMEM RBRACKET[] = {RCTL_T(KC_E), RALT_T(KC_I), COMBO_END};
 const uint16_t PROGMEM LPRN[] = {LCTL_T(KC_S), LSFT_T(KC_T), COMBO_END};
 const uint16_t PROGMEM RPRN[] = {RSFT_T(KC_N), RCTL_T(KC_E), COMBO_END};
-combo_t key_combos[] = {
-    COMBO(TAB, KC_TAB),
-    COMBO(LBRACKET, KC_LBRC),
-    COMBO(RBRACKET, KC_RBRC),
-    COMBO(LPRN, KC_LPRN),
-    COMBO(RPRN, KC_RPRN),
-};
+const uint16_t PROGMEM CPS[] = {KC_C, LT(LAYER_NUMERAL, KC_D), COMBO_END};
+combo_t key_combos[] = {COMBO(TAB, KC_TAB),       COMBO(LBRACKET, KC_LBRC),
+                        COMBO(RBRACKET, KC_RBRC), COMBO(LPRN, KC_LPRN),
+                        COMBO(RPRN, KC_RPRN),     COMBO(CPS, CW_TOGG)};
