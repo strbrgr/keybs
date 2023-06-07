@@ -29,6 +29,10 @@ enum dilemma_keymap_layers {
   LAYER_SYMBOLS,
 };
 
+int word_length_count = 0;
+int last_word_length = 0;
+bool combos_on = true; // use combo feature by default
+
 // Automatically enable sniping-mode on the pointer layer.
 #define DILEMMA_AUTO_SNIPING_ON_LAYER LAYER_POINTER
 
@@ -126,7 +130,7 @@ static uint16_t auto_pointer_layer_timer = 0;
     _______________DEAD_HALF_ROW_______________,  XXXXXXX,  KC_7, KC_8,  KC_9, XXXXXXX, \
     _______________DEAD_HALF_ROW_______________,  XXXXXXX,  KC_4, KC_5,  KC_6, XXXXXXX, \
      _______________DEAD_HALF_ROW_______________,    KC_0,  KC_1, KC_2,  KC_3, XXXXXXX, \
-                               KC_MINS,     KC_0, XXXXXXX, _______
+                               KC_MINS,  XXXXXXX, XXXXXXX, _______
 
 /**
  * \brief Symbols layer.
@@ -232,12 +236,31 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 #endif // DILEMMA_AUTO_SNIPING_ON_LAYER
 #endif // POINTING_DEVICE_ENABLE
 
-const uint16_t PROGMEM TAB[] = {LALT_T(KC_R), LSFT_T(KC_T), COMBO_END};
-const uint16_t PROGMEM LBRACKET[] = {LALT_T(KC_R), LCTL_T(KC_S), COMBO_END};
-const uint16_t PROGMEM RBRACKET[] = {RCTL_T(KC_E), RALT_T(KC_I), COMBO_END};
-const uint16_t PROGMEM LPRN[] = {LCTL_T(KC_S), LSFT_T(KC_T), COMBO_END};
-const uint16_t PROGMEM RPRN[] = {RSFT_T(KC_N), RCTL_T(KC_E), COMBO_END};
-const uint16_t PROGMEM CPS[] = {KC_C, LT(LAYER_NUMERAL, KC_D), COMBO_END};
-combo_t key_combos[] = {COMBO(TAB, KC_TAB),       COMBO(LBRACKET, KC_LBRC),
-                        COMBO(RBRACKET, KC_RBRC), COMBO(LPRN, KC_LPRN),
-                        COMBO(RPRN, KC_RPRN),     COMBO(CPS, CW_TOGG)};
+// combos don't forget to edit COMBO_COUNT in config.h
+enum combo_events {
+  SCREENSHOT,
+  CAPSWORD,
+};
+
+const uint16_t PROGMEM screenshot_combo[] = {KC_W, KC_F, COMBO_END};
+const uint16_t PROGMEM capsword_combo[] = {KC_B, KC_J, COMBO_END};
+
+combo_t key_combos[COMBO_COUNT] = {
+    [SCREENSHOT] = COMBO_ACTION(screenshot_combo),
+    [CAPSWORD] = COMBO_ACTION(capsword_combo),
+};
+
+void process_combo_event(uint16_t combo_index, bool pressed) {
+  switch (combo_index) {
+  case SCREENSHOT:
+    if (pressed) {
+      tap_code16(LSG(KC_4));
+    }
+    break;
+  case CAPSWORD:
+    if (pressed) {
+      caps_word_on();
+    }
+    break;
+  }
+}

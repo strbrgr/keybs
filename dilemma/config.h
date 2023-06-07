@@ -18,7 +18,7 @@
 
 #ifdef VIA_ENABLE
 /* VIA configuration. */
-#    define DYNAMIC_KEYMAP_LAYER_COUNT 6
+#define DYNAMIC_KEYMAP_LAYER_COUNT 6
 #endif // VIA_ENABLE
 
 /**
@@ -44,4 +44,6 @@
 #define CIRQUE_PINNACLE_TAP_ENABLE
 #define TAPPING_TERM 150
 #define POINTING_DEVICE_AUTO_MOUSE_ENABLE
-#define COMBO_COUNT 5
+#define COMBO_COUNT 2
+#define COMBO_TERM 30
+#define CAPS_WORD_TOGGLE_KEY
