@@ -237,17 +237,23 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 #endif // POINTING_DEVICE_ENABLE
 
 // combos don't forget to edit COMBO_COUNT in config.h
-enum combo_events {
-  SCREENSHOT,
-  CAPSWORD,
-};
+enum combo_events { SCREENSHOT, CAPSWORD, TAB, UNDERSCORE, DELETEWORD };
 
-const uint16_t PROGMEM screenshot_combo[] = {KC_W, KC_F, COMBO_END};
-const uint16_t PROGMEM capsword_combo[] = {KC_B, KC_J, COMBO_END};
+const uint16_t PROGMEM screenshot_combo[] = {KC_B, KC_J, COMBO_END};
+const uint16_t PROGMEM caps_word_combo[] = {LALT_T(KC_R), RALT_T(KC_I), COMBO_END};
+const uint16_t PROGMEM tab_combo[] = {LCTL_T(KC_S), RCTL_T(KC_E), COMBO_END};
+const uint16_t PROGMEM underscore_combo[] = {KC_V, KC_K, COMBO_END};
+const uint16_t PROGMEM delete_word_combo[] = {LSFT_T(KC_T), RSFT_T(KC_N), COMBO_END};
+/* const uint16_t PROGMEM RBRACKET[] = {RCTL_T(KC_E), RALT_T(KC_I), COMBO_END}; */
+/* const uint16_t PROGMEM LPRN[] = {LCTL_T(KC_S), LSFT_T(KC_T), COMBO_END}; */
+/* const uint16_t PROGMEM RPRN[] = {RSFT_T(KC_N), RCTL_T(KC_E), COMBO_END}; */
 
 combo_t key_combos[COMBO_COUNT] = {
     [SCREENSHOT] = COMBO_ACTION(screenshot_combo),
-    [CAPSWORD] = COMBO_ACTION(capsword_combo),
+    [CAPSWORD] = COMBO_ACTION(caps_word_combo),
+    [TAB] = COMBO_ACTION(tab_combo),
+    [UNDERSCORE] = COMBO_ACTION(underscore_combo),
+    [DELETEWORD] = COMBO_ACTION(delete_word_combo)
 };
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
@@ -260,6 +266,21 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
   case CAPSWORD:
     if (pressed) {
       caps_word_on();
+    }
+    break;
+  case TAB:
+    if (pressed) {
+      tap_code16(KC_TAB);
+    }
+    break;
+  case UNDERSCORE:
+    if (pressed) {
+      tap_code16(KC_UNDS);
+    }
+    break;
+  case DELETEWORD:
+    if (pressed) {
+      tap_code16(LOPT(KC_BSPC));
     }
     break;
   }
