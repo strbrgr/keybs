@@ -45,6 +45,15 @@
  */
 #define QUICK_TAP_TERM 0
 
+/**
+ * COMBOS
+ *
+ * See docs.qmk.fm/using-qmk/software-features/tap_hold#tapping-force-hold
+ */
+#define COMBO_COUNT 5
+#define COMBO_TERM 30
+#define CAPS_WORD_TOGGLE_KEY
+
 /*
  * Tap-or-Hold decision modes.
  *

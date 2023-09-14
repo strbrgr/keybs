@@ -28,12 +28,16 @@ enum charybdis_keymap_heyjochen_layers {
     LAYER_FUN,
 };
 
+int word_length_count = 0;
+int last_word_length = 0;
+bool combos_on = true; // use combo feature by default
+
 // Automatically enable sniping when the mouse layer is on.
 #define CHARYBDIS_AUTO_SNIPING_ON_LAYER LAYER_MOUSE
 
-#define BSP_NAV LT(LAYER_NAV, KC_BSPC)
+#define BSP_NUM LT(LAYER_NUM, KC_BSPC)
 #define ENT_MBO LT(LAYER_MBO, KC_ENT)
-#define TAB_NUM LT(LAYER_NUM, KC_TAB)
+#define TAB_FUN LT(LAYER_FUN, KC_TAB)
 #define ESC_SYM LT(LAYER_SYM, KC_ESC)
 #define SPC_NAV LT(LAYER_NAV, KC_SPC)
 #define MOUSE(KC) LT(LAYER_MOUSE, KC)
@@ -72,7 +76,7 @@ enum charybdis_keymap_heyjochen_layers {
        Q,    W,    F,    P,    B,    J,    L,    U,    Y, SCLN, \
        A,    R,    S,    T,    G,    M,    N,    E,    I,    O, \
        Z,    X,    C,    D,    V,    K,    H, COMM,  DOT, SLSH, \
-       ESC_SYM, SPC_NAV, TAB_NUM,  ENT_MBO, BSP_NAV)
+       ESC_SYM, SPC_NAV, TAB_FUN,  ENT_MBO, BSP_NUM)
 
 /** Convenience key shorthands. */
 #define U_NA KC_NO // Present but not available for use.
@@ -81,9 +85,9 @@ enum charybdis_keymap_heyjochen_layers {
 /** Convenience row shorthands. */
 #define __________________RESET_L__________________ QK_BOOT,    U_NA,    U_NA,    U_NA,    U_NA
 #define __________________RESET_R__________________    U_NA,    U_NA,    U_NA,    U_NA, QK_BOOT
-#define ______________HOME_ROW_GASC_L______________ KC_LGUI, KC_LALT, KC_LCTL, KC_LSHFT,    U_NA
+#define ______________HOME_ROW_GASC_L______________ KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT,    U_NA
 #define ______________HOME_ROW_ALGR_L______________    U_NA, KC_ALGR,    U_NA,    U_NA,    U_NA
-#define ______________HOME_ROW_GASC_R______________    U_NA, KC_LSHFT, KC_LCTL, KC_LALT, KC_LGUI
+#define ______________HOME_ROW_GASC_R______________    U_NA, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI
 #define ______________HOME_ROW_ALGR_R______________    U_NA,    U_NA,    U_NA, KC_ALGR,    U_NA
 
 /** Layers. */
@@ -105,8 +109,8 @@ enum charybdis_keymap_heyjochen_layers {
 // done Navigation.
 #define LAYOUT_LAYER_NAV                                                                      \
     __________________RESET_L__________________, XXXXXXX, KC_LPRN, KC_RPRN, KC_LCBR, KC_RCBR, \
-    ______________HOME_ROW_GASC_L______________,    KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, XXXXXXX, \
-    ______________HOME_ROW_ALGR_L______________,    U_NU,    KC_LCBR, KC_RCBR, KC_GT,KC_LT, \
+    ______________HOME_ROW_GASC_L______________, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, XXXXXXX, \
+    ______________HOME_ROW_ALGR_L______________,   U_NU,  KC_LBRC, KC_RBRC, KC_GT,     KC_LT, \
                          U_NA,    U_NA,    U_NA, KC_MSTP, KC_MPLY
 
 // Mouse.
@@ -118,24 +122,24 @@ enum charybdis_keymap_heyjochen_layers {
 
 // proof Symbols.
 #define LAYOUT_LAYER_SYM                                                                      \
-    __________________RESET_R__________________, KC_CIRC, KC_PERC, KC_ASTR, KC_AMPR, KC_BSLS, \
-    ______________HOME_ROW_GASC_R______________, KC_GRV, KC_QUOT, KC_DQUO, KC_EXLM, KC_PLUS, \
-    ______________HOME_ROW_ALGR_R______________, KC_TILD, KC_HASH, KC_AT, KC_DLR, KC_PIPE, \
-                      KC_LPRN, KC_RPRN, KC_UNDS, KC_MINS, MC_EQL
+    __________________RESET_L__________________, KC_CIRC, KC_PERC, KC_ASTR, KC_AMPR, KC_BSLS, \
+    ______________HOME_ROW_GASC_L______________, KC_GRV, KC_QUOT, KC_DQUO, KC_EXLM, KC_PLUS, \
+    ______________HOME_ROW_ALGR_L______________, KC_TILD, KC_HASH, KC_AT, KC_DLR, KC_PIPE, \
+                      KC_LPRN, KC_RPRN, KC_UNDS, KC_MINS, KC_EQL
 
 // Numerals.
 #define LAYOUT_LAYER_NUM                                                                      \
-    __________________RESET_R__________________, XXXXXXX,  KC_7, KC_8,  KC_9, XXXXXXX, \
-    ______________HOME_ROW_GASC_R______________, XXXXXXX,  KC_4, KC_5,  KC_6, XXXXXXX, \
-    ______________HOME_ROW_ALGR_R______________,    KC_0,  KC_1, KC_2,  KC_3, XXXXXXX, \
-                       KC_DOT,    KC_0, KC_MINS,    U_NA,    U_NA
+    KC_LBRC,    KC_7,   KC_8,    KC_9, KC_RBRC,  __________________RESET_R__________________, \
+    KC_SCLN,    KC_4,   KC_5,    KC_6,  KC_EQL,  ______________HOME_ROW_GASC_R______________, \
+       KC_0,    KC_1,   KC_2,    KC_3, KC_BSLS,  ______________HOME_ROW_ALGR_R______________, \
+                      KC_DOT, KC_COMM, KC_MINS,  U_NA,    U_NA
 
 // Function keys.
 #define LAYOUT_LAYER_FUN                                                                      \
      KC_F12,   KC_F7,   KC_F8,   KC_F9, KC_PSCR, __________________RESET_R__________________, \
      KC_F11,   KC_F4,   KC_F5,   KC_F6, KC_SCRL, ______________HOME_ROW_GASC_R______________, \
      KC_F10,   KC_F1,   KC_F2,   KC_F3, KC_PAUS, ______________HOME_ROW_ALGR_R______________,\
-                       KC_APP,  KC_SPC,  KC_TAB,    U_NA,    U_NA
+                       KC_APP,  KC_SPC,  KC_TAB, U_NA,    U_NA
 
 /**
  * Add Home Row mod to a layout.
@@ -153,8 +157,8 @@ enum charybdis_keymap_heyjochen_layers {
     ...)                                                               \
              L00,         L01,         L02,         L03,         L04,  \
              R05,         R06,         R07,         R08,         R09,  \
-      LGUI_T(L10), LALT_T(L11), LCTL_T(L12), LSFT_T(L13), L14,  \
-      ALL_T(R_15), RSFT_T(R16), RCTL_T(R17), LALT_T(R18), RGUI_T(R19), \
+      LGUI_T(L10), LALT_T(L11), LCTL_T(L12), LSFT_T(L13), ALL_T(L14),  \
+      ALL_T(R15), RSFT_T(R16), RCTL_T(R17), LALT_T(R18), RGUI_T(R19), \
       __VA_ARGS__
 #define HOME_ROW_MOD_GASC(...) _HOME_ROW_MOD_GASC(__VA_ARGS__)
 
@@ -221,4 +225,54 @@ void shutdown_user(void) {
     rgb_matrix_set_color_all(RGB_RED);
     rgb_matrix_update_pwm_buffers();
 #endif // RGB_MATRIX_ENABLE
+}
+
+// combos don't forget to edit COMBO_COUNT in config.h
+enum combo_events { SCREENSHOT, CAPSWORD, TAB, UNDERSCORE, DELETEWORD };
+
+const uint16_t PROGMEM screenshot_combo[] = {KC_B, KC_J, COMBO_END};
+const uint16_t PROGMEM caps_word_combo[] = {LALT_T(KC_R), RALT_T(KC_I), COMBO_END};
+const uint16_t PROGMEM tab_combo[] = {LCTL_T(KC_S), RCTL_T(KC_E), COMBO_END};
+const uint16_t PROGMEM underscore_combo[] = {KC_H, KC_COMM, COMBO_END};
+const uint16_t PROGMEM delete_word_combo[] = {LSFT_T(KC_T), RSFT_T(KC_N), COMBO_END};
+/* const uint16_t PROGMEM RBRACKET[] = {RCTL_T(KC_E), RALT_T(KC_I), COMBO_END}; */
+/* const uint16_t PROGMEM LPRN[] = {LCTL_T(KC_S), LSFT_T(KC_T), COMBO_END}; */
+/* const uint16_t PROGMEM RPRN[] = {RSFT_T(KC_N), RCTL_T(KC_E), COMBO_END}; */
+
+combo_t key_combos[COMBO_COUNT] = {
+    [SCREENSHOT] = COMBO_ACTION(screenshot_combo),
+    [CAPSWORD] = COMBO_ACTION(caps_word_combo),
+    [TAB] = COMBO_ACTION(tab_combo),
+    [UNDERSCORE] = COMBO_ACTION(underscore_combo),
+    [DELETEWORD] = COMBO_ACTION(delete_word_combo)
+};
+
+void process_combo_event(uint16_t combo_index, bool pressed) {
+  switch (combo_index) {
+  case SCREENSHOT:
+    if (pressed) {
+      tap_code16(LSG(KC_4));
+    }
+    break;
+  case CAPSWORD:
+    if (pressed) {
+      caps_word_on();
+    }
+    break;
+  case TAB:
+    if (pressed) {
+      tap_code16(KC_TAB);
+    }
+    break;
+  case UNDERSCORE:
+    if (pressed) {
+      tap_code16(KC_UNDS);
+    }
+    break;
+  case DELETEWORD:
+    if (pressed) {
+      tap_code16(LOPT(KC_BSPC));
+    }
+    break;
+  }
 }
