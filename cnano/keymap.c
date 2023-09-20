@@ -34,6 +34,7 @@ bool combos_on = true; // use combo feature by default
 
 // Automatically enable sniping when the mouse layer is on.
 #define CHARYBDIS_AUTO_SNIPING_ON_LAYER LAYER_MOUSE
+// #define CHARYBDIS_DRAGSCROLL_REVERSE_Y
 
 #define BSP_NUM LT(LAYER_NUM, KC_BSPC)
 #define ENT_MBO LT(LAYER_MBO, KC_ENT)
@@ -125,21 +126,21 @@ bool combos_on = true; // use combo feature by default
     __________________RESET_L__________________, KC_CIRC, KC_PERC, KC_ASTR, KC_AMPR, KC_BSLS, \
     ______________HOME_ROW_GASC_L______________, KC_GRV, KC_QUOT, KC_DQUO, KC_EXLM, KC_PLUS, \
     ______________HOME_ROW_ALGR_L______________, KC_TILD, KC_HASH, KC_AT, KC_DLR, KC_PIPE, \
-                      KC_LPRN, KC_RPRN, KC_UNDS, KC_MINS, KC_EQL
+                        U_NA,    U_NA,    U_NA , KC_MINS, KC_EQL
 
 // Numerals.
 #define LAYOUT_LAYER_NUM                                                                      \
     KC_LBRC,    KC_7,   KC_8,    KC_9, KC_RBRC,  __________________RESET_R__________________, \
-    KC_SCLN,    KC_4,   KC_5,    KC_6,  KC_EQL,  ______________HOME_ROW_GASC_R______________, \
+    KC_SCLN,    KC_4,   KC_5,    KC_6,  KC_EQL,  U_NA,   KC_BSPC,    U_NA,     U_NA,     U_NA, \
        KC_0,    KC_1,   KC_2,    KC_3, KC_BSLS,  ______________HOME_ROW_ALGR_R______________, \
                       KC_DOT, KC_COMM, KC_MINS,  U_NA,    U_NA
 
 // Function keys.
 #define LAYOUT_LAYER_FUN                                                                      \
-     KC_F12,   KC_F7,   KC_F8,   KC_F9, KC_PSCR, __________________RESET_R__________________, \
-     KC_F11,   KC_F4,   KC_F5,   KC_F6, KC_SCRL, ______________HOME_ROW_GASC_R______________, \
-     KC_F10,   KC_F1,   KC_F2,   KC_F3, KC_PAUS, ______________HOME_ROW_ALGR_R______________,\
-                       KC_APP,  KC_SPC,  KC_TAB, U_NA,    U_NA
+     __________________RESET_L__________________, KC_F12,   KC_F7,   KC_F8,   KC_F9, KC_PSCR, \
+     ______________HOME_ROW_GASC_L______________, KC_F11,   KC_F4,   KC_F5,   KC_F6, KC_SCRL, \
+     ______________HOME_ROW_ALGR_L______________, KC_F10,   KC_F1,   KC_F2,   KC_F3, KC_PAUS,\
+                        KC_APP,  KC_SPC,  KC_TAB, U_NA,    U_NA
 
 /**
  * Add Home Row mod to a layout.
@@ -229,12 +230,11 @@ void shutdown_user(void) {
 
 // combos don't forget to edit COMBO_COUNT in config.h
 enum combo_events { SCREENSHOT, CAPSWORD, TAB, UNDERSCORE, DELETEWORD };
-
 const uint16_t PROGMEM screenshot_combo[] = {KC_B, KC_J, COMBO_END};
-const uint16_t PROGMEM caps_word_combo[] = {LALT_T(KC_R), RALT_T(KC_I), COMBO_END};
+const uint16_t PROGMEM caps_word_combo[] = {KC_F, KC_U, COMBO_END};
 const uint16_t PROGMEM tab_combo[] = {LCTL_T(KC_S), RCTL_T(KC_E), COMBO_END};
-const uint16_t PROGMEM underscore_combo[] = {KC_H, KC_COMM, COMBO_END};
-const uint16_t PROGMEM delete_word_combo[] = {LSFT_T(KC_T), RSFT_T(KC_N), COMBO_END};
+const uint16_t PROGMEM underscore_combo[] = {KC_P, KC_L, COMBO_END}; 
+const uint16_t PROGMEM delete_word_combo[] = {KC_H, KC_COMM, COMBO_END};
 /* const uint16_t PROGMEM RBRACKET[] = {RCTL_T(KC_E), RALT_T(KC_I), COMBO_END}; */
 /* const uint16_t PROGMEM LPRN[] = {LCTL_T(KC_S), LSFT_T(KC_T), COMBO_END}; */
 /* const uint16_t PROGMEM RPRN[] = {RSFT_T(KC_N), RCTL_T(KC_E), COMBO_END}; */
