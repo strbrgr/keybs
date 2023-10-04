@@ -1,20 +1,3 @@
-/**
- * Copyright 2021 Quentin LEBASTARD <qlebastard@gmail.com>
- * Copyright 2021 Charly Delay <charly@codesink.dev> (@0xcharly)
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 #include QMK_KEYBOARD_H
 
 enum charybdis_keymap_heyjochen_layers {
@@ -37,7 +20,7 @@ bool combos_on = true; // use combo feature by default
 
 #define BSP_FUN LT(LAYER_FUN, KC_BSPC)
 #define ENT_MBO LT(LAYER_MBO, KC_ENT)
-#define TAB_NUM LT(LAYER_NUM, KC_TAB)
+//#define TAB_NUM LT(LAYER_NUM, KC_TAB)
 #define ESC_SYM LT(LAYER_SYM, KC_ESC)
 #define SPC_NAV LT(LAYER_NAV, KC_SPC)
 #define MOUSE(KC) LT(LAYER_MOUSE, KC)
@@ -59,26 +42,12 @@ bool combos_on = true; // use combo feature by default
 #define WH_D KC_MS_WH_DOWN
 #define WH_U KC_MS_WH_UP
 
-// clang-format off
-/** Convenience macro. */
-#define _KC_LAYOUT_wrapper(                                                                             \
-         k00,      k01,      k02,      k03,      k04,      k05,      k06,      k07,      k08,      k09, \
-         k10,      k11,      k12,      k13,      k14,      k15,      k16,      k17,      k18,      k19, \
-         k20,      k21,      k22,      k23,      k24,      k25,      k26,      k27,      k28,      k29, \
-         ...)                                                                                           \
-    KC_##k00, KC_##k01, KC_##k02, KC_##k03, KC_##k04, KC_##k05, KC_##k06, KC_##k07, KC_##k08, KC_##k09, \
-    KC_##k10, KC_##k11, KC_##k12, KC_##k13, KC_##k14, KC_##k15, KC_##k16, KC_##k17, KC_##k18, KC_##k19, \
-    KC_##k20, KC_##k21, KC_##k22, KC_##k23, KC_##k24, KC_##k25, KC_##k26, KC_##k27, KC_##k28, KC_##k29, \
-    __VA_ARGS__
-#define KC_LAYOUT_wrapper(...) _KC_LAYOUT_wrapper(__VA_ARGS__)
-
 /** Base layer with BÉPO layout. */
-#define LAYOUT_LAYER_BASE_BEPO KC_LAYOUT_wrapper(               \
-       Q,    W,    F,    P,    B,    J,    L,    U,    Y, SCLN, \
-       A,    R,    S,    T,    G,    M,    N,    E,    I,    O, \
-       Z,    X,    C,    D,    V,    K,    H, COMM,  DOT, SLSH, \
-       ESC_SYM, SPC_NAV, TAB_NUM,  ENT_MBO, BSP_FUN)
-
+#define LAYOUT_LAYER_BASE             \
+       KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN, \
+       KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O, \
+       KC_Z,    KC_X,    KC_C,    D_NUM,    KC_V,    KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, \
+       ESC_SYM, SPC_NAV, KC_TAB,  ENT_MBO, BSP_FUN
 /** Convenience key shorthands. */
 #define U_NA KC_NO // Present but not available for use.
 #define U_NU KC_NO // Available but not used.
@@ -107,7 +76,7 @@ bool combos_on = true; // use combo feature by default
     ______________HOME_ROW_ALGR_L______________,    U_NU,    WH_L,    WH_D,    WH_U,    WH_R, \
                          U_NA,    U_NA,    U_NA, KC_BTN1, KC_BTN3
 
-// done Navigation.
+// Navigation.
 #define LAYOUT_LAYER_NAV                                                                      \
     __________________RESET_L__________________, XXXXXXX, KC_LPRN, KC_RPRN, KC_LCBR, KC_RCBR, \
     ______________HOME_ROW_GASC_L______________, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, XXXXXXX, \
@@ -121,7 +90,7 @@ bool combos_on = true; // use combo feature by default
     DPI_MOD, DRGSCRL, USR_CPY, USR_CUT, USR_UND,    U_NU,    WH_L,    WH_D,    WH_U,    WH_R, \
                       KC_BTN2, KC_BTN1, KC_BTN3, KC_BTN1, KC_BTN3
 
-// proof Symbols.
+// Symbols.
 #define LAYOUT_LAYER_SYM                                                                      \
     __________________RESET_L__________________, KC_CIRC, KC_PERC, KC_ASTR, KC_AMPR, KC_BSLS, \
     ______________HOME_ROW_GASC_L______________, KC_GRV, KC_QUOT, KC_DQUO, KC_EXLM, KC_PLUS, \
@@ -163,16 +132,6 @@ bool combos_on = true; // use combo feature by default
       __VA_ARGS__
 #define HOME_ROW_MOD_GASC(...) _HOME_ROW_MOD_GASC(__VA_ARGS__)
 
-/**
- * Add mouse layer keys to a layout.
- *
- * Expects a 10-key per row layout.  The layout passed in parameter must contain
- * at least 30 keycodes.
- *
- * This is meant to be used with `LAYOUT_LAYER_BASE_BEPO` defined above, eg.:
- *
- *     MOUSE_MOD(LAYOUT_LAYER_BASE_BEPO)
- */
 #define _MOUSE_MOD(                                               \
     L00, L01, L02, L03, L04, R05, R06, R07, R08, R09,             \
     L10, L11, L12, L13, L14, R15, R16, R17, R18, R19,             \
@@ -191,7 +150,7 @@ bool combos_on = true; // use combo feature by default
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [LAYER_BASE] = LAYOUT_wrapper(
-    MOUSE_MOD(HOME_ROW_MOD_GASC(LAYOUT_LAYER_BASE_BEPO))
+    MOUSE_MOD(HOME_ROW_MOD_GASC(LAYOUT_LAYER_BASE))
   ),
   [LAYER_MBO] = LAYOUT_wrapper(LAYOUT_LAYER_MBO),
   [LAYER_MEDIA] = LAYOUT_wrapper(LAYOUT_LAYER_MEDIA),

@@ -1,19 +1,3 @@
-/**
- * Copyright 2022 Charly Delay <charly@codesink.dev> (@0xcharly)
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 #include QMK_KEYBOARD_H
 
 #ifdef DILEMMA_AUTO_POINTER_LAYER_TRIGGER_ENABLE
@@ -74,24 +58,6 @@ static uint16_t auto_pointer_layer_timer = 0;
 #define ______________HOME_ROW_GACS_L______________ KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX
 #define ______________HOME_ROW_GACS_R______________ XXXXXXX, KC_RSFT, KC_RCTL, KC_RALT, KC_RGUI
 
-/*
- * Layers used on the Dilemma.
- *
- * These layers started off heavily inspired by the Miryoku layout, but trimmed
- * down and tailored for a stock experience that is meant to be fundation for
- * further personalization.
- *
- * See https://github.com/manna-harbour/miryoku for the original layout.
- */
-
-/**
- * \brief Function layer.
- *
- * Secondary right-hand layer has function keys mirroring the numerals on the
- * primary layer with extras on the pinkie column, plus system keys on the inner
- * column. App is on the tertiary thumb key and other thumb keys are duplicated
- * from the base layer to enable auto-repeat.
- */
 #define LAYOUT_LAYER_FUNCTION                                                                 \
     _______________DEAD_HALF_ROW_______________, KC_PSCR,   KC_F7,   KC_F8,   KC_F9,  KC_F12, \
     ______________HOME_ROW_GACS_L______________, KC_SCRL,   KC_F4,   KC_F5,   KC_F6,  KC_F11, \
@@ -105,45 +71,23 @@ static uint16_t auto_pointer_layer_timer = 0;
     _______, DRGSCRL, SNIPING, KC_BTN3, XXXXXXX, XXXXXXX, KC_BTN3, SNIPING, DRGSCRL, _______, \
                                KC_BTN2, KC_BTN1, KC_BTN1, KC_BTN2
 
-/**
- * \brief Navigation layer.
- *
- * Primary right-hand layer (left home thumb) is navigation and editing. Cursor
- * keys are on the home position, line and page movement below, clipboard above,
- * caps lock and insert on the inner column. Thumb keys are duplicated from the
- * base layer to avoid having to layer change mid edit and to enable auto-repeat.
- */
 #define LAYOUT_LAYER_NAVIGATION                                                               \
     _______________DEAD_HALF_ROW_______________, XXXXXXX, KC_LPRN, KC_RPRN, KC_LCBR, KC_RCBR, \
     ______________HOME_ROW_GACS_L______________, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, XXXXXXX, \
     _______________DEAD_HALF_ROW_______________,  XXXXXXX,KC_LBRC, KC_RBRC, KC_GT, KC_LT, \
                                XXXXXXX, _______,  XXXXXXX, XXXXXXX
 
-/**
- * \brief Numeral layout.
- *
- * Primary left-hand layer (right home thumb) is numerals and symbols. Numerals
- * are in the standard numpad locations with symbols in the remaining positions.
- * `KC_DOT` is duplicated from the base layer.
- */
 #define LAYOUT_LAYER_NUMERAL                                                                  \
-    _______________DEAD_HALF_ROW_______________,  XXXXXXX,  KC_7, KC_8,  KC_9, XXXXXXX, \
-    _______________DEAD_HALF_ROW_______________,  XXXXXXX,  KC_4, KC_5,  KC_6, XXXXXXX, \
-     _______________DEAD_HALF_ROW_______________,    KC_0,  KC_1, KC_2,  KC_3, XXXXXXX, \
-                               KC_MINS,  XXXXXXX, XXXXXXX, _______
+    _______________DEAD_HALF_ROW_______________,  KC_LBRC,    KC_7,   KC_8,    KC_9, KC_RBRC, \
+    _______________DEAD_HALF_ROW_______________,  KC_MINS,    KC_4,   KC_5,    KC_6,  KC_EQL, \
+    XXXXXXX, XXXXXXX, KC_BSPC, XXXXXXX, XXXXXXX,     KC_0,    KC_1,   KC_2,    KC_3, KC_DOT, \
+                               XXXXXXX, XXXXXXX,  KC_COMM,   KC_BSPC
 
-/**
- * \brief Symbols layer.
- *
- * Secondary left-hand layer has shifted symbols in the same locations to reduce
- * chording when using mods with shifted symbols. `KC_LPRN` is duplicated next to
- * `KC_RPRN`.
- */
 #define LAYOUT_LAYER_SYMBOLS                                                                  \
     _______________DEAD_HALF_ROW_______________, KC_CIRC, KC_PERC, KC_ASTR, KC_AMPR, KC_BSLS, \
     _______________DEAD_HALF_ROW_______________, KC_GRV, KC_QUOT, KC_DQUO, KC_EXLM, KC_PLUS, \
     _______________DEAD_HALF_ROW_______________, KC_TILD, KC_HASH, KC_AT, KC_DLR, KC_PIPE, \
-                                KC_GRV, KC_UNDS, KC_MINS, KC_EQL
+                              XXXXXXX,  XXXXXXX, KC_MINS, KC_EQL
 
 /**
  * \brief Add Home Row mod to a layout.
@@ -161,21 +105,11 @@ static uint16_t auto_pointer_layer_timer = 0;
     ...)                                                               \
              L00,         L01,         L02,         L03,         L04,  \
              R05,         R06,         R07,         R08,         R09,  \
-      LGUI_T(L10), LALT_T(L11), LCTL_T(L12), LSFT_T(L13),        L14,  \
-             R15,  RSFT_T(R16), RCTL_T(R17), RALT_T(R18), RGUI_T(R19), \
+      LGUI_T(L10), LALT_T(L11), LCTL_T(L12), LSFT_T(L13),        MEH_T(L14),  \
+             MEH_T(R15),  RSFT_T(R16), RCTL_T(R17), RALT_T(R18), RGUI_T(R19), \
       __VA_ARGS__
 #define HOME_ROW_MOD_GACS(...) _HOME_ROW_MOD_GACS(__VA_ARGS__)
 
-/**
- * \brief Add pointer layer keys to a layout.
- *
- * Expects a 10-key per row layout.  The layout passed in parameter must contain
- * at least 30 keycodes.
- *
- * This is meant to be used with `LAYER_ALPHAS_QWERTY` defined above, eg.:
- *
- *     POINTER_MOD(LAYER_ALPHAS_QWERTY)
- */
 #define _POINTER_MOD(                                                  \
     L00, L01, L02, L03, L04, R05, R06, R07, R08, R09,                  \
     L10, L11, L12, L13, L14, R15, R16, R17, R18, R19,                  \
@@ -238,12 +172,11 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 // combos don't forget to edit COMBO_COUNT in config.h
 enum combo_events { SCREENSHOT, CAPSWORD, TAB, UNDERSCORE, DELETEWORD };
-
 const uint16_t PROGMEM screenshot_combo[] = {KC_B, KC_J, COMBO_END};
-const uint16_t PROGMEM caps_word_combo[] = {LALT_T(KC_R), RALT_T(KC_I), COMBO_END};
+const uint16_t PROGMEM caps_word_combo[] = {KC_F, KC_U, COMBO_END};
 const uint16_t PROGMEM tab_combo[] = {LCTL_T(KC_S), RCTL_T(KC_E), COMBO_END};
-const uint16_t PROGMEM underscore_combo[] = {KC_V, KC_K, COMBO_END};
-const uint16_t PROGMEM delete_word_combo[] = {LSFT_T(KC_T), RSFT_T(KC_N), COMBO_END};
+const uint16_t PROGMEM underscore_combo[] = {KC_P, KC_L, COMBO_END}; 
+const uint16_t PROGMEM delete_word_combo[] = {KC_H, KC_COMM, COMBO_END};
 /* const uint16_t PROGMEM RBRACKET[] = {RCTL_T(KC_E), RALT_T(KC_I), COMBO_END}; */
 /* const uint16_t PROGMEM LPRN[] = {LCTL_T(KC_S), LSFT_T(KC_T), COMBO_END}; */
 /* const uint16_t PROGMEM RPRN[] = {RSFT_T(KC_N), RCTL_T(KC_E), COMBO_END}; */

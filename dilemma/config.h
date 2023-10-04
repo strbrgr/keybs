@@ -31,7 +31,6 @@
  * With `IGNORE_MOD_TAP_INTERRUPT`, within `TAPPING_TERM`:
  *   Mod(a)🠗 e🠗 Mod(a)🠕 e🠕 ➞ ae
  */
-#define IGNORE_MOD_TAP_INTERRUPT
 
 /* Charybdis-specific features. */
 
@@ -42,6 +41,7 @@
 // #define DILEMMA_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 #endif // POINTING_DEVICE_ENABLE
 #define CIRQUE_PINNACLE_TAP_ENABLE
+// #define USB_VBUS_PIN GP19
 #define TAPPING_TERM 150
 #define POINTING_DEVICE_AUTO_MOUSE_ENABLE
 #define COMBO_COUNT 5

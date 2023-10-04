@@ -34,7 +34,7 @@
  * See docs.qmk.fm/using-qmk/software-features/tap_hold#tapping-term
  */
 #ifndef TAPPING_TERM
-#    define TAPPING_TERM 160
+#    define TAPPING_TERM 150
 #endif // TAPPING_TERM
 
 /**
@@ -76,18 +76,19 @@
  */
 #define PERMISSIVE_HOLD
 
+#define POINTING_DEVICE_AUTO_MOUSE_ENABLE
+#define AUTO_MOUSE_DEFAULT_LAYER 4
 /** Charybdis-specific features. */
 
-#ifdef POINTING_DEVICE_ENABLE
 // Automatically enable the pointer layer when moving the trackball.  See also:
 // - `CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_TIMEOUT_MS`
 // - `CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD`
-// #define CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
+#define CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 
 // Flip horizontal direction for drag-scroll.
-#    define CHARYBDIS_DRAGSCROLL_REVERSE_X
-// #define CHARYBDIS_DRAGSCROLL_REVERSE_Y
-#endif // POINTING_DEVICE_ENABLE
+//#define CHARYBDIS_DRAGSCROLL_REVERSE_X
+#define CHARYBDIS_DRAGSCROLL_REVERSE_Y
+
 
 /** RGB Matrix. */
 
