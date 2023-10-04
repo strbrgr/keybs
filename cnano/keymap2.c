@@ -85,9 +85,9 @@ bool combos_on = true; // use combo feature by default
 
 // Mouse.
 #define LAYOUT_LAYER_MOUSE                                                                    \
-    S_D_MOD, USR_PST, USR_CPY, USR_CUT, USR_UND, USR_RDO, USR_PST, USR_CPY, USR_CUT, USR_UND, \
+    DPI_MOD, S_D_MOD, USR_CPY, USR_CUT, USR_UND, USR_RDO, USR_PST, USR_CPY, USR_CUT, USR_UND, \
     ______________HOME_ROW_GASC_L______________,    U_NU,    MS_L,    MS_D,    MS_U,    MS_R, \
-    DPI_MOD, DRGSCRL, USR_CPY, USR_CUT, USR_UND,    U_NU,    WH_L,    WH_D,    WH_U,    WH_R, \
+    USR_RDO, DRGSCRL, USR_CPY, USR_CUT, USR_UND,    U_NU,    WH_L,    WH_D,    WH_U,    WH_R, \
                       KC_BTN2, KC_BTN1, KC_BTN3, KC_BTN1, KC_BTN3
 
 // Symbols.
