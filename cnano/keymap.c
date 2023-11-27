@@ -98,12 +98,12 @@ bool combos_on = true; // use combo feature by default
     __________________RESET_L__________________, XXXXXXX, KC_LPRN, KC_RPRN, KC_LCBR, KC_RCBR, \
     ______________HOME_ROW_GASC_L______________, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, XXXXXXX, \
     ______________HOME_ROW_ALGR_L______________,   U_NU,  KC_LBRC, KC_RBRC, KC_GT,     KC_LT, \
-                         U_NA,    U_NA,    U_NA, KC_MSTP, KC_MPLY
+                         U_NA,    U_NA,    U_NA,   U_NA,  U_NA
 
 // Mouse.
 #define LAYOUT_LAYER_MOUSE                                                                    \
     DPI_MOD, S_D_MOD, USR_CPY, USR_CUT, USR_UND, USR_RDO, USR_PST, USR_CPY, USR_CUT, USR_UND, \
-    ______________HOME_ROW_GASC_L______________,    U_NU,    MS_L,    MS_D,    MS_U,    MS_R, \
+    ______________HOME_ROW_GASC_L______________,    U_NU,    U_NU,    U_NU,    U_NU,    U_NU, \
     USR_RDO, DRGSCRL, USR_CPY, USR_CUT, USR_UND,    U_NU,    WH_L,    WH_D,    WH_U,    WH_R, \
                       KC_BTN2, KC_BTN1, KC_BTN3, KC_BTN1, KC_BTN3
 
