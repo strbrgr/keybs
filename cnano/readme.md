@@ -9,7 +9,7 @@ cd ~/qmk_firmware
 ```
 
 ```
-qmk flash -kb bastardkb/charybdis/3x5/v2/splinky_3 -km heyjochen
+qmk flash -kb bastardkb/charybdis/3x5/v2/splinky_3 -km jochen
 ```
 
 ```
