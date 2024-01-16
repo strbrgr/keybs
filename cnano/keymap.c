@@ -209,7 +209,7 @@ enum combo_events { SCREENSHOT, CAPSWORD, TAB, UNDERSCORE, DELETEWORD };
 const uint16_t PROGMEM screenshot_combo[] = {KC_B, KC_J, COMBO_END};
 const uint16_t PROGMEM caps_word_combo[] = {KC_F, KC_U, COMBO_END};
 const uint16_t PROGMEM tab_combo[] = {LCTL_T(KC_S), RCTL_T(KC_E), COMBO_END};
-const uint16_t PROGMEM underscore_combo[] = {KC_P, KC_L, COMBO_END}; 
+const uint16_t PROGMEM underscore_combo[] = {KC_COMM, KC_DOT, COMBO_END}; 
 const uint16_t PROGMEM delete_word_combo[] = {KC_H, KC_COMM, COMBO_END};
 /* const uint16_t PROGMEM RBRACKET[] = {RCTL_T(KC_E), RALT_T(KC_I), COMBO_END}; */
 /* const uint16_t PROGMEM LPRN[] = {LCTL_T(KC_S), LSFT_T(KC_T), COMBO_END}; */
